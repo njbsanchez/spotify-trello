@@ -1,0 +1,44 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="https://p.trellocdn.com/power-up.min.css">
+    <script src="https://p.trellocdn.com/power-up.min.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+      integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
+      crossorigin="anonymous"></script>
+    <script src="https://trello-power-up.glitch.me/js/confetti.js"></script>
+    <style>
+      
+      canvas {
+        display: block;
+        position: relative;
+        zindex: 1;
+        pointer-events: none;
+      }
+
+      #content {
+        text-align: center;
+        height: 100%;
+        width: 100%;
+        padding-top:25%;
+        position: absolute;
+        color: silver;
+        font-family: verdana;
+        font-size: 45px;
+        font-weight: bold;
+        line-height: 50px;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div id="content">
+      <marquee id="message" scrollamount="15">You did it!</marquee>
+    </div>
+    <canvas id="canvas"></canvas>
+  </body>
+  <script src="./js/celebrate.js"></script>
+</html>
+
+
+
