@@ -11,25 +11,28 @@
 body {
   font-family: helvetica, arial, sans-serif;
   margin: 25px;
+  text-align: center;
+  background-color: white;
 }
 
 h1 {
   font-weight: bold;
-  color: pink;
+  color: black;
 }
 
 .bold {
   font-weight: bold;
 }
 
-p {
+h5 {
   max-width: 600px;
+  color: gray;
 }
 
 form {
   margin-bottom: 25px;
   padding: 15px;
-  background-color: cyan;
+  background-color: #808080;
   display: inline-block;
   width: 100%;
   max-width: 340px;
@@ -61,7 +64,7 @@ button {
 }
 
 button:hover {
-  background-color: yellow;
+  background-color: green;
 }
 
 button:active {

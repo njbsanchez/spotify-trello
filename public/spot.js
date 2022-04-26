@@ -10,7 +10,7 @@ $(function() {
       $('input').focus();
       
       document.getElementById('results').innerHTML = data.tracks.items.map(track => {
-        return `<tr><td style="padding-bottom:10px">${track.name} | ${track.artists[0].name}</td><td><button type='button' name="" data-button='{"id": "${track.id}"}'>Pin</button></td></tr>`;
+        return `<tr><td style="padding-bottom:10px">${track.name} | ${track.artists[0].name}</td><td><button type='button' onClick="saveData(this)" id="${track.id}" data-id="${track.id}">Pin</button></td></tr>`;
       }).join('\n');
     });
     
@@ -18,3 +18,6 @@ $(function() {
 
 });
 
+
+
+    
