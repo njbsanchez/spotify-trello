@@ -1,16 +1,8 @@
-<!-- This is a static file -->
-<!-- served from your routes in server.js -->
-
-<!-- You might want to try something fancier: -->
-<!-- html/nunjucks docs: https://mozilla.github.io/nunjucks/ -->
-<!-- pug: https://pugjs.org/ -->
-<!-- haml: http://haml.info/ -->
-<!-- hbs(handlebars): http://handlebarsjs.com/ -->
 
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Spotify Quicksearch</title>
+    <title>Spotify Track Search</title>
     <meta name="description" content="A cool thing made with Glitch">
     <link id="favicon" rel="icon" href="https://glitch.com/edit/favicon-app.ico" type="image/x-icon">
     <meta charset="utf-8">
@@ -21,13 +13,12 @@
   <body>
     <header>
       <h1>
-        Spotify Quicksearch
+        TRACK SEARCH
       </h1>
     </header>
 
     <main>
-      <p class="bold">Oh hi,</p>
-      <p>Search for tracks on Spotify:</p>
+      <h5>Search for tracks on Spotify by filtering for track name, artist name, or both!</h5>
       <form>
         <input id="query" required type="text" maxlength="100" placeholder="Search query">
         <input required type="radio" name="context" value="artist"><label>Artist name</label>
@@ -37,7 +28,7 @@
       </form>
       <section class="results">
         <h3>results</h3>
-        <table id="results"></table>
+        <table style="text-align: left"  id="results"></table>
       </section>
     </main>
 
@@ -52,6 +43,23 @@
             integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00="
             crossorigin="anonymous"></script>
     <script src="/spot.js"></script>
+    <script type="text/javascript">
+      function saveData(d){
+        var track_id = d.getAttribute("data-id");
+        console.log(track_id);
+        var t = window.TrelloPowerUp.iframe();
+        var permissions = t.getContext().permissions;
+        if (permissions.board === 'write') {
+          return t.remove('card', 'shared', 'spotify_track_id');
+          return t.set('card', 'shared', 'spotify_track_id', track_id);
+        };
+        console.log("***************");
+        return t.getAll()
+        .then(function (data) {
+          console.log(JSON.stringify(data, null, 2));
+        });
+      }
+    </script>
 
   </body>
 </html>
