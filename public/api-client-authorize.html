@@ -3,12 +3,21 @@
   <head>
     <meta charset="utf-8">
     <title>Authorize</title>
-    <link rel="stylesheet" href="https://p.trellocdn.com/power-up.min.css">
+<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://sp-bootstrap.global.ssl.fastly.net/8.0.0/sp-bootstrap.min.css" rel="stylesheet" />
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.min.js"
+      integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+      crossorigin="anonymous"></script>
     
+    <!-- Include our Javascript -->
+<!--     <script src="/oauth.js" defer></script> -->
   </head>
   <body>
     
-    <button type="button" class="mod-primary">Click to authorize</button>
+    <button type="button" id="authorize" class="mod-primary">Click to authorize</button>
     
     <!-- We'll use this code block to show the response from the Trello API -->
     <code id="codeBlock">
@@ -21,10 +30,10 @@
       is a helper library that is a wrapper for the API. It relies on jquery's
       XHR methods, so we need to bring in jquery first
     -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<!--     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> -->
     
     <!-- Don't forget to add your API key into the script tag for client.js! -->
-    <script src="https://trello.com/1/client.js?key=d99d95eee814ec084225fbc799b070ef"></script>
+<!--     <script src="https://trello.com/1/client.js?key=d99d95eee814ec084225fbc799b070ef"></script> -->
     
     <!-- And because we're ALSO doing Power-Up-related things, we still need the Power-Up client library -->
     <script src="https://p.trellocdn.com/power-up.min.js"></script>
@@ -36,50 +45,57 @@
         $("code").hide();
         
         // Initialize the Power-Up client library and include your app name and API key
-        var t = window.TrelloPowerUp.iframe({
-          appKey: 'd99d95eee814ec084225fbc799b070ef',
-          appName: 'Trellody'
-        });
+        var Promise = TrelloPowerUp.Promise;
+        var t = TrelloPowerUp.iframe();
 
-        let success = (response) => {
-          $("code").html(JSON.stringify(response, null, 2));
-          $("code").show();
+        // When constructing the URL, remember that you'll need to encode your
+        // APPNAME and RETURNURL
+        // You can do that with the encodeURIComponent(string) function
+        // encodeURIComponent('Hello World') -> "Hello%20World"
+        var oauthUrl = 'https://accounts.spotify.com/en/authorize?client_id=2102d6bf57714410a8f50dd1ccadc571&redirect_uri=https://trello-try-full.glitch.me&scope=streaming%20user-read-birthdate%20user-read-private%20user-modify-playback-state&response_type=token&show_dialog=true';
+
+        var tokenLooksValid = function(token) {
+          return /^[0-9a-f]{64}$/.test(token);
         }
 
-        let error = (error) => {
-          alert(JSON.stringify(error, null, 2));
-        }
-        
-        let makeRequest = (token) => {
-          window.Trello.setToken(token);
-          try {
-            window.Trello.members.get('me', success, error)
-          } catch (err) {
-            console.log(err)
-          } 
-        }
-        
-        t.getRestApi()
-        .getToken()
-        .then((token) => {
-          console.log('We\'ve received a token!')
-          if (!token) { 
-            console.log('But it doesn\'t exist');
-            document.querySelector('button').addEventListener('click', function() {
-              t.getRestApi()
-              .authorize({ scope: 'read', expiration: '1hour' })
-              .then(function() {
-                t.closePopup();
-                alert('Successfully authorized')
-              });
-            });
-          } else {
-            console.log('So we should make a request with it.');
-            $("button").hide();
-            makeRequest(token);
+        var storageHandler = function(evt) {
+          if (evt.key === 'token' && evt.newValue) {
+            // Do something with the token here, then...
+            authorizeWindow.close();
+            window.removeEventListener('storage', storageHandler);
           }
+        }
+
+        var authorizeOpts = {
+          height: 680,
+          width: 580,
+          validToken: tokenLooksValid,
+          windowCallback: function(authorizeWindow) {
+            // This callback gets called with the handle to the
+            // authorization window. This can be useful if you
+            // can't call window.close() in your new window
+            // (such as the case when your authorization page
+            // is rendered inside an iframe).
+            window.addEventListener('storage', storageHandler);
+          }
+        };
+
+        var authBtn = document.getElementById('authorize');
+        authBtn.addEventListener('click', function() {
+          t.authorize(oauthUrl, authorizeOpts)
+          .then(function(token) {
+            return t.set('member', 'private', 'spot_token', token)
+            .catch(t.NotHandled, function() {
+              // fall back to storing at board level
+              return t.set('board', 'private', 'token', token);
+            });
+          })
+          .then(function() {
+            // now that the token is stored, we can close this popup
+            // you might alternatively choose to open a new popup
+            return t.closePopup();
+          });
         });
-      });
     </script>
   </body>
 </html>

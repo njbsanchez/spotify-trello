@@ -193,45 +193,52 @@ var boardButtonCallback = function(t){
 };
 
 var restApiCardButtonCallback = function(t) {
- return t.getRestApi()
-  .isAuthorized()
-  .then(function(authorized) {
-    if (!authorized) {
-      // You might be tempted to call client.authorize from a capability handler like the one we are in right now.
-      // Unfortunately this does not register as a click by the browser, and it will block the popup. Instead, we need to
-      // open a t.popup from our capability handler, and load an iframe that contains a button that calls client.authorize.
-      return t.popup({
-        title: 'Authorize Spotify\'s REST API',   
+   return t.popup({
+        title: 'Authorize API',   
         url: './api-client-authorize.html',
+        height: 600,
       })
-    } else {
-      return t.popup({
-        titlex: "Make a choice",
-        items: [{
-          // We'll use the client on the authorization page to make an example request.
-          text: 'Make an example request',
-          callback: function(t) { 
-            return t.popup({
-              title: 'Authorize Spotify\'s REST API',   
-              url: './api-client-authorize.html',
-            })
-          }
-        }, {
-          // You can de-authorize the REST API client with a call to .clearToken()
-          text: 'Unauthorize',
-          callback: function(t) {
-            return t.getRestApi()
-              .clearToken()
-              .then(function() {
-                t.alert('You\'ve successfully deauthorized!'); 
-                t.closePopup(); 
-              })
-          }
-        }]
-      })
-    }
-  });
-};
+  
+      };
+//  return t.getRestApi()
+//   .isAuthorized()
+//   .then(function(authorized) {
+//     if (!authorized) {
+//       // You might be tempted to call client.authorize from a capability handler like the one we are in right now.
+//       // Unfortunately this does not register as a click by the browser, and it will block the popup. Instead, we need to
+//       // open a t.popup from our capability handler, and load an iframe that contains a button that calls client.authorize.
+//       return t.popup({
+//         title: 'Authorize Spotify\'s REST API',   
+//         url: './api-client-authorize.html',
+//       })
+//     } else {
+//       return t.popup({
+//         titlex: "Make a choice",
+//         items: [{
+//           // We'll use the client on the authorization page to make an example request.
+//           text: 'Make an example request',
+//           callback: function(t) { 
+//             return t.popup({
+//               title: 'Authorize Spotify\'s REST API',   
+//               url: './api-client-authorize.html',
+//             })
+//           }
+//         }, {
+//           // You can de-authorize the REST API client with a call to .clearToken()
+//           text: 'Unauthorize',
+//           callback: function(t) {
+//             return t.getRestApi()
+//               .clearToken()
+//               .then(function() {
+//                 t.alert('You\'ve successfully deauthorized!'); 
+//                 t.closePopup(); 
+//               })
+//           }
+//         }]
+//       })
+//     }
+//   });
+// };
 
 var spotifyButtonCallback = function(t) {
  return t.popup({
@@ -365,7 +372,19 @@ TrelloPowerUp.initialize({
 //     // we can let Trello know like so:
 //     // throw t.NotHandled();
 //   },
-  
+  'authorization-status': function(t, options){
+    return t.get('member', 'private', 'authToken')
+      .then(function(authToken) {
+        return { authorized: authToken != null }
+      });
+  },
+  'show-authorization': function(t, options){
+    return t.popup({
+      title: 'Authorize Spotify',
+      url: './auth.html',
+      height: 140,
+    });
+  },
   'board-buttons': function(t, options){
     return [{
       // we can either provide a button that has a callback function
@@ -433,25 +452,24 @@ TrelloPowerUp.initialize({
       icon: GRAY_ICON,
       text: 'Spotify',
       callback: spotifyButtonCallback,
-    },{
-      // usually you will provide a callback function to be run on button click
-      // we recommend that you use a popup on click generally
-      icon: GRAY_ICON, // don't use a colored icon here
-      text: 'Open Popup',
-      callback: cardButtonCallback
-    }, {
-      // but of course, you could also just kick off to a url if that's your thing
-      icon: GRAY_ICON,
-      text: 'Just a URL',
-      url: 'https://developers.trello.com',
-      target: 'Trello Developer Site' // optional target for above url
     }, {
       icon: GRAY_ICON,
       text: 'Use REST API',
       callback: restApiCardButtonCallback,
     }];
   },
-  
+    //   },{
+  //     // usually you will provide a callback function to be run on button click
+  //     // we recommend that you use a popup on click generally
+  //     icon: GRAY_ICON, // don't use a colored icon here
+  //     text: 'Open Popup',
+  //     callback: cardButtonCallback
+  //   }, {
+  //     // but of course, you could also just kick off to a url if that's your thing
+  //     icon: GRAY_ICON,
+  //     text: 'Just a URL',
+  //     url: 'https://developers.trello.com',
+  //     target: 'Trello Developer Site' // optional target for above url
   // 'card-detail-badges': function(t, options) {
   //   return getBadges(t);
   // },
@@ -508,49 +526,49 @@ TrelloPowerUp.initialize({
       
   */
   
-  'authorization-status': function(t, options){
-    // Return a promise that resolves to an object with a boolean property 'authorized' of true or false
-    // The boolean value determines whether your Power-Up considers the user to be authorized or not.
+//   'authorization-status': function(t, options){
+//     // Return a promise that resolves to an object with a boolean property 'authorized' of true or false
+//     // The boolean value determines whether your Power-Up considers the user to be authorized or not.
     
-    // When the value is false, Trello will show the user an "Authorize Account" options when
-    // they click on the Power-Up's gear icon in the settings. The 'show-authorization' capability
-    // below determines what should happen when the user clicks "Authorize Account"
+//     // When the value is false, Trello will show the user an "Authorize Account" options when
+//     // they click on the Power-Up's gear icon in the settings. The 'show-authorization' capability
+//     // below determines what should happen when the user clicks "Authorize Account"
     
-    // For instance, if your Power-Up requires a token to be set for the member you could do the following:
-    return t.get('member', 'private', 'token')
-    // Or if you needed to set/get a non-Trello secret token, like an oauth token, you could
-    // use t.storeSecret('key', 'value') and t.loadSecret('key')
-    .then(function(token){
-      if(token){
-        return { authorized: true };
-      }
-      return { authorized: false };
-    });
-    // You can also return the object synchronously if you know the answer synchronously.
-  },
-  'show-authorization': function(t, options){
-    // Returns what to do when a user clicks the 'Authorize Account' link from the Power-Up gear icon
-    // which shows when 'authorization-status' returns { authorized: false }.
+//     // For instance, if your Power-Up requires a token to be set for the member you could do the following:
+//     return t.get('member', 'private', 'token')
+//     // Or if you needed to set/get a non-Trello secret token, like an oauth token, you could
+//     // use t.storeSecret('key', 'value') and t.loadSecret('key')
+//     .then(function(token){
+//       if(token){
+//         return { authorized: true };
+//       }
+//       return { authorized: false };
+//     });
+//     // You can also return the object synchronously if you know the answer synchronously.
+//   },
+//   'show-authorization': function(t, options){
+//     // Returns what to do when a user clicks the 'Authorize Account' link from the Power-Up gear icon
+//     // which shows when 'authorization-status' returns { authorized: false }.
     
-    // If we want to ask the user to authorize our Power-Up to make full use of the Trello API
-    // you'll need to add your API from trello.com/app-key below:
-    let trelloAPIKey = '';
-    // This key will be used to generate a token that you can pass along with the API key to Trello's
-    // RESTful API. Using the key/token pair, you can make requests on behalf of the authorized user.
+//     // If we want to ask the user to authorize our Power-Up to make full use of the Trello API
+//     // you'll need to add your API from trello.com/app-key below:
+//     let trelloAPIKey = '';
+//     // This key will be used to generate a token that you can pass along with the API key to Trello's
+//     // RESTful API. Using the key/token pair, you can make requests on behalf of the authorized user.
     
-    // In this case we'll open a popup to kick off the authorization flow.
-    if (trelloAPIKey) {
-      return t.popup({
-        title: 'My Auth Popup',
-        args: { apiKey: trelloAPIKey }, // Pass in API key to the iframe
-        url: './authorize.html', // Check out public/authorize.html to see how to ask a user to auth
-        height: 140,
-      });
-    } else {
-      console.log("🙈 Looks like you need to add your API key to the project!");
-    }
-  }
-}, {
+//     // In this case we'll open a popup to kick off the authorization flow.
+//     if (trelloAPIKey) {
+//       return t.popup({
+//         title: 'My Auth Popup',
+//         args: { apiKey: trelloAPIKey }, // Pass in API key to the iframe
+//         url: './authorize.html', // Check out public/authorize.html to see how to ask a user to auth
+//         height: 140,
+//       });
+//     } else {
+//       console.log("🙈 Looks like you need to add your API key to the project!");
+//     }
+//   }
+// }, {
   appKey: 'indevelopment',
   appName: 'Trelody'
 });

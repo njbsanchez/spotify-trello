@@ -12,7 +12,7 @@
       if (window.opener) {
         window.opener.authorize(token);
       } else {
-        localStorage.setItem('token', token);
+        localStorage.setItem('spotAuthtoken', token);
       }
       setTimeout(function(){ window.close(); }, 1000);
     </script>
