@@ -9,6 +9,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/style.css">
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.min.js"
+      integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+      crossorigin="anonymous"></script>
   </head>
   <body>
     <header>
@@ -32,13 +36,6 @@
       </section>
     </main>
 
-    <footer>
-      <a href="https://glitch.com">
-        Remix this in Glitch
-      </a>
-    </footer>
-
-    <!-- Your web-app is https, so your scripts need to be too -->
     <script src="https://code.jquery.com/jquery-2.2.1.min.js"
             integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00="
             crossorigin="anonymous"></script>
@@ -47,13 +44,13 @@
       function saveData(d){
         var track_id = d.getAttribute("data-id");
         console.log(track_id);
+        console.log("***************");
         var t = window.TrelloPowerUp.iframe();
         var permissions = t.getContext().permissions;
         if (permissions.board === 'write') {
           return t.remove('card', 'shared', 'spotify_track_id');
           return t.set('card', 'shared', 'spotify_track_id', track_id);
         };
-        console.log("***************");
         return t.getAll()
         .then(function (data) {
           console.log(JSON.stringify(data, null, 2));
