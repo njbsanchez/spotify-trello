@@ -1,47 +1,34 @@
-# Glitch Hosted Sample Trello Power-Up 🚀
+# ShipIt54 - Trello + Spotify Power Up 🚀
 
-Hey there 👋
+Once seen primarily as a project management tool, Trello has transformed into more than just a tool that gets a task or project from point A to B. Today, Trello is used by millions as a unique place where work can be done and managed. Accessing Confluence, Jira, JWM, Atlas…all products can be used and accessed (or on the roadmap to be) while staying within your Trello board so that the user can remain in the tool that best serves them.
 
-This is a full featured sample Trello Power-Up. What does that mean for you? We hope it's a great starting point for you to remix, and make your own great Power-Up that makes Trello work even better for you. 
+Trello is the mission control hub for so many, lets’s continue adding on to this experience by enabling apps like Spotify and Apple Music into one’s board. Imagine, accessing your music player of choice all without leaving your place of work. Limit wasted time and remain on the tools that help serve you and your needs.
 
-Once you remix this, you'll want to take a look at what the new name is. Click the `Show Live` button up in the top bar and grab that url and then head here:
+### Why are we doing it?
+Optimizing Trello as the place where all customers start their day is the reason this project makes so much sense. In the future, we can look to enabling podcast apps, etc. Keeping one's work within a set board allows for the users to really feel like this is their personal space as well as create other boards etc. with music to help set the mood for future meetings, projects, etc.
 
-👉  [https://trello.com/power-ups/admin](https://trello.com/power-ups/admin)
-
-Select the Trello team you want to add the Power-Up to. Note: You need to be an admin of the Trello team to add custom Power-Ups to it.
-
-Now click the `Create new Power-Up` button. If this is your first time creating a Power-Up, you'll need to agree to a "Joint Developer Agreement" first. After you have done that, you just need to give your cool new Power-Up a name, and paste the url link into the field titled `Iframe connector URL` (the one you copied earlier).
-
-This example Power-Up makes use of the following capabilities:
-* authorization-status
-* attachment-sections
-* attachment-thumbnail
-* board-buttons
-* card-back-section
-* card-badges
-* card-buttons
-* card-detail-badges
-* card-from-url
-* format-url
-* show-authorization
-* show-settings
-
-So make sure to turn them all on when filling out the form. You'll also need a URL for an icon. You can use the sample one we have here: [https://cdn.glitch.com/2442c68d-7b6d-4b69-9d13-feab530aa88e%2Fglitch-icon.svg?1489773457908](https://cdn.glitch.com/2442c68d-7b6d-4b69-9d13-feab530aa88e%2Fglitch-icon.svg?1489773457908).
-
-Click `Save` and it's time to celebrate. 🎉 🎊
-
-Now when you look at the Power-Ups for any board in that team, your awesome new Power-Up will be available. You can continue to make changes to the Glitch project and you'll see that reflected in Trello (you may just need to refresh).
+### What will success look like?
+Successful integration would look like a user having the ability to search a song, playlist, etc. all within Trello without having to leave the board itself. Skipping and pausing songs would be possible all while staying within one's board.
 
 ---
 
-Want more information about Power-Ups? 🤔
+## :slight_smile: MVP features 
 
-👉  [https://developers.trello.com/power-ups/intro](https://developers.trello.com/power-ups/intro)
+1. User can authenticate Trello to access Spotify features and data
 
-We even have office hours you can sign up for if you want to talk to a real live person about your Power-Up. Just grab a slot that works for you on this [calendar](https://calendar.google.com/calendar/selfsched?sstoken=UU5DczNLUkNIbk5ifGRlZmF1bHR8YzJmZWM4YWM0NTgxMTE1NmRmMzgxNzMwODRjYzEwZGU). (Remember to add a bit about what you'd like help with when signing up for a slot).
+  - create’s board playlist
+
+2. User can add/edit/remove song to Trello card
+
+  - search for song in card pop-up
+
+  - save song id to card data
+
+  - add song to board playlist
+
+3. User can open Spotify player in board bar
 
 ---
 
-Looking for a more _realistic_ example Power-Up? You may find the Trello Card Snooze Power-Up useful. 😴
+More to come...
 
-👉  [Trello Card Snooze Glitch Project](https://glitch.com/edit/#!/trellocardsnooze)
