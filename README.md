@@ -1,4 +1,4 @@
-# ShipIt54 - Trello + Spotify Power Up 🚀
+# ShipIt54 - Trello + Spotify Power Up 🎧
 
 Once seen primarily as a project management tool, Trello has transformed into more than just a tool that gets a task or project from point A to B. Today, Trello is used by millions as a unique place where work can be done and managed. Accessing Confluence, Jira, JWM, Atlas…all products can be used and accessed (or on the roadmap to be) while staying within your Trello board so that the user can remain in the tool that best serves them.
 
@@ -12,7 +12,7 @@ Successful integration would look like a user having the ability to search a son
 
 ---
 
-## :slight_smile: MVP features 
+## 😊 MVP features 
 
 1. User can authenticate Trello to access Spotify features and data
 
