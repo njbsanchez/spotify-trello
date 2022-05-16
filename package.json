@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
+    
   },
   "repository": "https://github.com/trello/glitch-trello-power-up",
   "dependencies": {
