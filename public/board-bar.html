@@ -1,0 +1,65 @@
+<html>
+  <head>
+     <title>Spotify-Trello Web Frame</title>
+<!--     <link rel="stylesheet" href="https://p.trellocdn.com/power-up.min.css">
+    <link rel="stylesheet" href="./css/board-bar.css"> -->
+    <script src="https://p.trellocdn.com/power-up.min.js"></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://sp-bootstrap.global.ssl.fastly.net/8.0.0/sp-bootstrap.min.css" rel="stylesheet" />
+    
+  </head>
+  
+  <body>
+    <h1>Trello SDK Web Player</h1>
+    <button id="previousTrack">Previous Track</button>
+    <button id="togglePlay">Play/Pause Track</button>
+    <button id="nextTrack">Next Track</button>
+    
+    <script src="https://sdk.scdn.co/spotify-player.js"></script>
+    <script>
+      window.onSpotifyWebPlaybackSDKReady = () => {
+        const token = 'BQDT39oZVwEra2nzZLzeM6hJetZl4xiNpSQ2plUZRB74i7IemB8OHEyNDQu-zOiY00oGX4ZT2RXIIpghrzfl4RJzLvLYJg2poCV2ReNcg5FUsmZf3p2Dfmuw7zgqAYyTaLkvfJweoux6jKjggwKH6NZWhTq704_kfQ';
+        const player = new Spotify.Player({
+          name: 'Trello SDK Web Player',
+          getOAuthToken: cb => { cb(token); },
+          volume: 0.5
+        });
+        
+        // Ready
+        player.addListener('ready', ({ device_id }) => {
+          console.log('Ready with Device ID', device_id);
+        });
+
+        // Not Ready
+        player.addListener('not_ready', ({ device_id }) => {
+          console.log('Device ID has gone offline', device_id);
+        });
+        player.addListener('initialization_error', ({ message }) => { 
+            console.error(message);
+        });
+        player.addListener('authentication_error', ({ message }) => {
+            console.error(message);
+        });
+        player.addListener('account_error', ({ message }) => {
+            console.error(message);
+        });
+        player.connect();
+        document.getElementById('togglePlay').onclick = function() {
+          player.togglePlay();
+          };
+        document.getElementById('previousTrack').onclick = function() {
+          player.previousTrack();
+          };
+        document.getElementById('nextTrack').onclick = function() {
+          player.nextTrack();
+          };
+
+        };
+        
+        player.connect();
+    </script>
+    <script src="./js/board-bar.js"></script>
+  </body>
+</html>
