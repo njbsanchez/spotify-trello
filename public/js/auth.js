@@ -8,7 +8,7 @@ t.render(function() {
 
 // creates oauth url ----------------------------------------
 const authEndpoint = 'https://accounts.spotify.com/authorize';
-const clientId = process.env.CLIENT_ID;
+const clientId = '0e42a84a93d9445281811fe11a093eb5';
 const redirectUri = 'https://trello-try-full.glitch.me/auth-success.html';
 const scopes = [
   'streaming',
