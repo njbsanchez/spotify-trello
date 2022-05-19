@@ -42,7 +42,7 @@ app.get("/", function (request, response) {
 
 app.get("/search", function (request, response) {
   let query = request.query.query;
-  
+
   if(request.query.context) {
     if(request.query.context == 'artist') {
       query = 'artist:' + request.query.query;
