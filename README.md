@@ -1,5 +1,7 @@
 # ShipIt54 - Trello + Spotify Power Up 🎧
 
+context: ShipIt is Atlassian's internal employee hackathon to bring creativity and to anything-everything Atlassian. For more info, check out this page: https://www.atlassian.com/company/shipit
+
 Once seen primarily as a project management tool, Trello has transformed into more than just a tool that gets a task or project from point A to B. Today, Trello is used by millions as a unique place where work can be done and managed. Accessing Confluence, Jira, JWM, Atlas…all products can be used and accessed (or on the roadmap to be) while staying within your Trello board so that the user can remain in the tool that best serves them.
 
 Trello is the mission control hub for so many, lets’s continue adding on to this experience by enabling apps like Spotify and Apple Music into one’s board. Imagine, accessing your music player of choice all without leaving your place of work. Limit wasted time and remain on the tools that help serve you and your needs.
